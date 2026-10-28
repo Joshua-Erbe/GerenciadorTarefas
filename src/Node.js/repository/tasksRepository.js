@@ -84,12 +84,3 @@ export const updateTask = async (idtask, newname, newdate) => {
         throw new Error('Erro ao atualizar tarefa! Verifique as informações e tente novamente')
     }
 }
-
-export const findExistTask = async (user_id, task_date, task_name) => { /*Finalizar Feature de analisar a task*/
-    try {
-        
-    } catch (error) {
-        console.log(`Esse foi o erro encontrado ao analisar a tarefa: ${error}`)
-        throw new Error('Erro ao analisar se a tarefa ja existe para o usuario selecionado')
-    }
-}
