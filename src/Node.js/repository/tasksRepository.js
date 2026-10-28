@@ -1,9 +1,11 @@
 import poolconnect from '../connect.js'
 
-export const findAllTasks = async () => {
+export const findAllTasks = async (page, limit) => {
     try {
+        const offset = (page - 1) * limit
+
         const [logs] = await poolconnect.execute(
-            'SELECT * FROM tasks'
+            `SELECT * FROM tasks ORDER BY created_at DESC, id_task DESC LIMIT ? OFFSET ?`, [limit, offset]
         )
         return logs
     } catch (error) {

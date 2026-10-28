@@ -3,11 +3,22 @@ import * as usersRepository  from "../repository/usersRepository.js";
 export const getUsers = async (req, res) => {
     try {
         const response = await usersRepository.findAllUsers()
+        
+        if (!response || response.length === 0) {
+            return res.status(200).json(
+                {
+                    message: 'Nenhum usuario encontrado',
+                    users: []
+                }
+            )
+        }
 
-        res.status(200).json(response)
+        res.status(200).json({
+            users: response
+        })
     } catch (error) {
-        console.log(`Esse foi o erro encontrado ao tentar visualizar os usuarios: ${error}`)
-        res.status(400).json(
+        console.log(`Erro ao listar usuarios: ${error}`)
+        res.status(500).json(
             {MessageSystem: 'Erro ao visualizar os usuarios, por favor tente novamente ou verifique a conexão com o banco'}
         )
     }

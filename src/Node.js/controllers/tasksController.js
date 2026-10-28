@@ -2,12 +2,26 @@ import * as tasksRepository from "../repository/tasksRepository.js";
 
 export const getAllTasks = async (req, res) => {
     try {
-        const results = await tasksReposity.findAllTasks()
+        let page = parseInt(req.query.page, 10) || 1;
+        let limit = parseInt(req.query.limit, 10) || 10;
 
+        if (page < 1) {
+            page = 1
+        }
+
+        if (limit > 100) {
+            limit = 100
+        } 
+        
+        if (limit < 1) {
+            limit = 1
+        }
+
+        const results = await tasksRepository.findAllTasks(page, limit)
         res.status(200).json(results)
     } catch (error) {
         console.log(`Esse foi o erro encontrado ao tentar pegar as tarefas: ${error}`)
-        res.status(400).json(
+        res.status(500).json(
             {
                 ErrorMessage: "Erro ao pegar as tarefas do banco de dados"
             }
