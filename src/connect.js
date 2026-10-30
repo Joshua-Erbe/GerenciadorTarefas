@@ -18,17 +18,13 @@ function conectarBanco () {
 const connect = conectarBanco();
 
 export async function TestConnect() {
-    let teste;
     try {
-        teste = await connect.getConnection()
-        console.log("Conectando. . .")
+        console.log("Testando conexão. . .")
+        await connect.query(`SELECT 1`)
+        return true;
     } catch (error) {
         console.log(`Esse foi o erro na hora da conexão: ${error}`)
-    } finally {
-        if (teste) {
-            teste.release();
-            console.log("Conexão Estabelecida!");
-        }
+        return false
     }
 }
 
